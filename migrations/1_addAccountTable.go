@@ -9,7 +9,7 @@ import (
 func init() {
 	migrations.MustRegisterTx(func(db migrations.DB) error {
 		fmt.Println("creating table account...")
-		_, err := db.Exec(`CREATE TABLE accounts(
+		_, err := db.Exec(`CREATE TABLE account(
       account_id SERIAL PRIMARY KEY,
       username TEXT NOT NULL UNIQUE,
       pw_hash TEXT NOT NULL,

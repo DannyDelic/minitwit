@@ -11,7 +11,7 @@ import (
 var HashPassword = security.HashPassword
 
 func signUp(ctx *gin.Context) {
-	account := new(store.BingBong)
+	account := new(store.Account)
 	if err := ctx.Bind(account); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -27,7 +27,7 @@ func signUp(ctx *gin.Context) {
 }
 
 func signIn(ctx *gin.Context) {
-	acccount := new(store.BingBong)
+	acccount := new(store.Account)
 	if err := ctx.Bind(acccount); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

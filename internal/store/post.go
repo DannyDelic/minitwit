@@ -2,7 +2,7 @@ package store
 
 import "time"
 
-type message struct {
+type Post struct {
 	Id       int64
 	AuthorId int64
 	Text     string
