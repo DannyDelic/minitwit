@@ -1,13 +1,9 @@
 import {
     Box,
     Image,
-    Text,
-    chakra,
     Flex,
-    SimpleGrid,
     Stat,
-    StatLabel,
-    useColorModeValue,
+    useColorModeValue, HStack, Text
 } from '@chakra-ui/react';
 import CryptoJS from "crypto-js/x64-core";
 import MD5 from "crypto-js/hmac-md5";
@@ -33,21 +29,25 @@ function Post(props: PostProps) {
             bg={useColorModeValue('white', 'whiteAlpha.100')}
             rounded={'lg'}>
             <Flex>
+                <HStack security={'0'}>
                 <Box
                     my={'auto'}
                     color={useColorModeValue('gray.800', 'gray.200')}
-                    alignContent={'center'}>
+                    alignContent={'center'}
+                    minW={16}
+                    maxW={16}>
                     <Image src={getGravatarUrl(email, 48)}/>
                 </Box>
                 <Box pl={{ base: 2, md: 4 }}>
-                    <Text fontWeight={'medium'} display={"flex"} >
-                        {name}
+                    <HStack security={'0'}>
+                        <Text fontWeight={'medium'} display={"flex"}>{name}</Text>
                         <Text color={'gray'} fontWeight={"light"} paddingLeft={1}>{`— ${dateString} @ ${time}`}</Text>
-                    </Text>
-                    <Text fontSize={'2xl'} fontWeight={'medium'}>
+                    </HStack >
+                    <Text fontSize={'2xl'} overflowWrap={"break-word"} wordBreak={"break-word"}>
                         {message}
                     </Text>
                 </Box>
+                </HStack>
             </Flex>
         </Stat>
     );

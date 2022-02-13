@@ -1,26 +1,22 @@
 import {
     Box,
-    Flex,
-    Text,
-    IconButton,
     Button,
-    Stack,
     Collapse,
+    Flex,
     Icon,
-    Link,
+    IconButton,
     Popover,
-    PopoverTrigger,
     PopoverContent,
+    PopoverTrigger,
+    Stack,
+    Text,
     useColorModeValue,
-    useBreakpointValue,
     useDisclosure,
 } from '@chakra-ui/react';
-import {
-    HamburgerIcon,
-    CloseIcon,
-    ChevronDownIcon,
-    ChevronRightIcon,
-} from '@chakra-ui/icons';
+import {ChevronDownIcon, ChevronRightIcon, CloseIcon, HamburgerIcon,} from '@chakra-ui/icons';
+import {Link, useNavigate} from "react-router-dom";
+import AuthContext from "../../store/auth-context";
+import {Fragment, useContext} from "react";
 
 interface NavBarProps {
     accountId?: number;
@@ -28,7 +24,14 @@ interface NavBarProps {
 
 export default function NavigationBar(props: NavBarProps) {
     const {accountId} = props
-    const { isOpen, onToggle } = useDisclosure();
+    const navigation = useNavigate();
+    const authContext = useContext(AuthContext);
+    const loggedIn = authContext.loggedIn;
+    const {isOpen, onToggle} = useDisclosure();
+    const logoutHandler = () => {
+        authContext.logout();
+        navigation("/", {replace: true});
+    };
 
     return (
         <Box>
@@ -36,30 +39,27 @@ export default function NavigationBar(props: NavBarProps) {
                 bg={useColorModeValue('white', 'gray.800')}
                 color={useColorModeValue('gray.600', 'white')}
                 minH={'60px'}
-                py={{ base: 2 }}
-                px={{ base: 4 }}
+                py={{base: 2}}
+                px={{base: 4}}
                 borderBottom={1}
                 borderStyle={'solid'}
                 borderColor={useColorModeValue('gray.200', 'gray.900')}
                 align={'center'}>
                 <Flex
-                    flex={{ base: 1, md: 'auto' }}
-                    ml={{ base: -2 }}
-                    display={{ base: 'flex', md: 'none' }}>
+                    flex={{base: 1, md: 'auto'}}
+                    ml={{base: -2}}
+                    display={{base: 'flex', md: 'none'}}>
                     <IconButton
                         onClick={onToggle}
                         icon={
-                            isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
+                            isOpen ? <CloseIcon w={3} h={3}/> : <HamburgerIcon w={5} h={5}/>
                         }
                         variant={'ghost'}
                         aria-label={'Toggle Navigation'}
                     />
                 </Flex>
-                <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-                    <Text
-                        textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-                        fontFamily={'heading'}
-                        color={useColorModeValue('gray.800', 'white')}>
+                <Flex flex={{base: 1}} justify={{base: 'center', md: 'start'}}>
+                    <Link to="/">
                         <Button
                             variant='outline'
                             colorScheme='teal'
@@ -67,71 +67,79 @@ export default function NavigationBar(props: NavBarProps) {
                             fontSize='20px'>
                             <img src="https://cdn.7tv.app/emote/60ae958e229664e8667aea38/1x" alt="my image"/>
                         </Button>
-                    </Text>
+                    </Link>
 
-                    <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
-                        <DesktopNav />
+                    <Flex display={{base: 'none', md: 'flex'}} ml={10}>
+                        <DesktopNav/>
                     </Flex>
                 </Flex>
 
                 <Stack
-                    flex={{ base: 1, md: 0 }}
+                    flex={{base: 1, md: 0}}
                     justify={'flex-end'}
                     direction={'row'}
                     spacing={6}>
-                    <Button
-                        as={'a'}
-                        fontSize={'sm'}
-                        fontWeight={400}
-                        variant={'link'}
-                        href={'#'}>
-                        Sign In
-                    </Button>
-                    <Button
-                        display={{ base: 'none', md: 'inline-flex' }}
-                        as={'a'}
-                        fontSize={'sm'}
-                        fontWeight={600}
-                        color={'white'}
-                        bg={'pink.400'}
-                        href={'#'}
-                        _hover={{
-                            bg: 'pink.300',
-                        }}>
-                        Sign Up
-                    </Button>
+                    {loggedIn && (
+                        <Button
+                            fontSize={'sm'}
+                            variant='ghost'
+                            onClick={logoutHandler}
+                        >
+                            {"Sign out"}
+                        </Button>)}
+                    {!loggedIn && (
+                        <Fragment>
+                            <Link
+                                to={'/login'}>
+                                <Button
+                                    fontSize={'sm'}
+                                    fontWeight={400}
+                                    variant='ghost'
+                                >
+                                    {"Sign in"}
+                                </Button>
+                            </Link>
+                            <Link
+                                to={'/signup'}>
+                                <Button
+                                    display={{base: 'none', md: 'inline-flex'}}
+                                    fontSize={'sm'}
+                                    fontWeight={600}
+                                    color={'white'}
+                                    bg={'pink.400'}
+                                    _hover={{
+                                        bg: 'pink.300',
+                                    }}>
+                                    Sign Up
+                                </Button>
+                            </Link>
+                        </Fragment>)}
                 </Stack>
             </Flex>
-
             <Collapse in={isOpen} animateOpacity>
-                <MobileNav />
+                <MobileNav/>
             </Collapse>
         </Box>
     );
 }
 
 const DesktopNav = () => {
-    const linkColor = useColorModeValue('gray.600', 'gray.200');
-    const linkHoverColor = useColorModeValue('gray.800', 'white');
     const popoverContentBgColor = useColorModeValue('white', 'gray.800');
 
     return (
-        <Stack direction={'row'} spacing={4} paddingTop={1}>
+        <Stack direction={'row'} spacing={4} paddingTop={0}>
             {NAV_ITEMS_ANONYMOUS.map((navItem) => (
                 <Box key={navItem.label}>
                     <Popover trigger={'hover'} placement={'bottom-start'}>
                         <PopoverTrigger>
                             <Link
-                                p={2}
-                                href={navItem.href ?? '#'}
-                                fontSize={'sm'}
-                                fontWeight={500}
-                                color={linkColor}
-                                _hover={{
-                                    textDecoration: 'none',
-                                    color: linkHoverColor,
-                                }}>
-                                {navItem.label}
+                                to={navItem.href ?? '#'}>
+                                <Button
+                                    fontSize={'sm'}
+                                    variant='ghost'
+                                    fontWeight={600}>
+                                    {navItem.label}
+                                </Button>
                             </Link>
                         </PopoverTrigger>
 
@@ -157,20 +165,15 @@ const DesktopNav = () => {
     );
 };
 
-const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
+const DesktopSubNav = ({label, href, subLabel}: NavItem) => {
     return (
         <Link
-            href={href}
-            role={'group'}
-            display={'block'}
-            p={2}
-            rounded={'md'}
-            _hover={{ bg: useColorModeValue('pink.50', 'gray.900') }}>
+            to={href ?? '#'}>
             <Stack direction={'row'} align={'center'}>
                 <Box>
                     <Text
                         transition={'all .3s ease'}
-                        _groupHover={{ color: 'pink.400' }}
+                        _groupHover={{color: 'pink.400'}}
                         fontWeight={500}>
                         {label}
                     </Text>
@@ -180,11 +183,11 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
                     transition={'all .3s ease'}
                     transform={'translateX(-10px)'}
                     opacity={0}
-                    _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
+                    _groupHover={{opacity: '100%', transform: 'translateX(0)'}}
                     justify={'flex-end'}
                     align={'center'}
                     flex={1}>
-                    <Icon color={'pink.400'} w={5} h={5} as={ChevronRightIcon} />
+                    <Icon color={'pink.400'} w={5} h={5} as={ChevronRightIcon}/>
                 </Flex>
             </Stack>
         </Link>
@@ -196,7 +199,7 @@ const MobileNav = () => {
         <Stack
             bg={useColorModeValue('white', 'gray.800')}
             p={4}
-            display={{ md: 'none' }}>
+            display={{md: 'none'}}>
             {NAV_ITEMS_ANONYMOUS.map((navItem) => (
                 <MobileNavItem key={navItem.label} {...navItem} />
             ))}
@@ -204,15 +207,15 @@ const MobileNav = () => {
     );
 };
 
-const MobileNavItem = ({ label, children, href }: NavItem) => {
-    const { isOpen, onToggle } = useDisclosure();
+const MobileNavItem = ({label, children, href}: NavItem) => {
+    const {isOpen, onToggle} = useDisclosure();
 
     return (
         <Stack spacing={4} onClick={children && onToggle}>
             <Flex
                 py={2}
                 as={Link}
-                href={href ?? '#'}
+                to={href ?? '#'}
                 justify={'space-between'}
                 align={'center'}
                 _hover={{
@@ -234,7 +237,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
                 )}
             </Flex>
 
-            <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>
+            <Collapse in={isOpen} animateOpacity style={{marginTop: '0!important'}}>
                 <Stack
                     mt={2}
                     pl={4}
@@ -244,7 +247,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
                     align={'start'}>
                     {children &&
                         children.map((child) => (
-                            <Link key={child.label} py={2} href={child.href}>
+                            <Link key={child.label} to={child.href ?? '#'}>
                                 {child.label}
                             </Link>
                         ))}
@@ -264,7 +267,7 @@ interface NavItem {
 const NAV_ITEMS_ANONYMOUS: Array<NavItem> = [
     {
         label: 'Public Timeline',
-        href: 'bitchboy',
+        href: 'public',
     }
 ]
 

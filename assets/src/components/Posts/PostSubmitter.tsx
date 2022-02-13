@@ -65,10 +65,10 @@ function PostSubmitter() {
                             }}
                             borderColor={useColorModeValue('gray.300', 'gray.700')}
                             id={'email'}
-                            type={'email'}
+                            type={'text'}
                             required
-                            placeholder={'Your Email'}
-                            aria-label={'Your Email'}
+                            placeholder={'Who asked, just close the browser'}
+                            aria-label={'Your post'}
                             value={email}
                             disabled={state !== 'initial'}
                             onChange={(e: ChangeEvent<HTMLInputElement>) =>

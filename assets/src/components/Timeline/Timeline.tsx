@@ -76,7 +76,7 @@ const Timeline = (props: TimelineProps) => {
                     <Post name={"DingDong"} email={"danny-duller@hotmail.com"} message={"hey der wathopaedsopd"} date={new Date(2020, 9)}/>
                     <Post name={"DingDong"} email={"danny-duller@hotmail.com"} message={"hey der wathopaedsopd"} date={new Date(2020, 9)}/>
                     <Post name={"DingDong"} email={"danny-duller@hotmail.com"} message={"hey der wathopaedsopd"} date={new Date(2020, 9)}/>
-                    <Post name={"DingDong"} email={"danny-duller@hotmail.com"} message={"hey der wathopaedsopd"} date={new Date(2020, 9)}/>
+                    <Post name={"DingDong"} email={"danny-duller@hotmail.com"} message={"hey der fdsdsfd sdfdsfwathopaedsopd"} date={new Date(2020, 9)}/>
                 </Stack>
         </Container>
     );
