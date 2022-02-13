@@ -18,6 +18,15 @@ func setRouter() *gin.Engine {
 	{
 		api.POST("/signup", signUp)
 		api.POST("/signin", signIn)
+		api.GET("/allposts", allPosts)
+		api.GET("/posts/:id", accountPosts)
+	}
+
+	authorized := api.Group("/")
+	authorized.Use(authorization)
+	{
+		authorized.GET("/posts", indexPosts)
+		authorized.POST("/post", createPost)
 	}
 
 	router.NoRoute(func(ctx *gin.Context) { ctx.JSON(http.StatusNotFound, gin.H{}) })

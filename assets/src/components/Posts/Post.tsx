@@ -10,13 +10,18 @@ import MD5 from "crypto-js/hmac-md5";
 
 interface PostProps {
     name: string;
-    email: string
     message: string;
     date: Date;
 }
 
+export interface IPost {
+    name: string;
+    content: string;
+    date: Date;
+}
+
 function Post(props: PostProps) {
-    const { name, message, date, email } = props;
+    const { name, message, date } = props;
     const dateString = date.toLocaleDateString()
     const time = date.toLocaleTimeString()
 
@@ -36,7 +41,7 @@ function Post(props: PostProps) {
                     alignContent={'center'}
                     minW={16}
                     maxW={16}>
-                    <Image src={getGravatarUrl(email, 48)}/>
+                    <Image src={getGravatarUrl(name, 48)}/>
                 </Box>
                 <Box pl={{ base: 2, md: 4 }}>
                     <HStack security={'0'}>
@@ -53,8 +58,8 @@ function Post(props: PostProps) {
     );
 }
 
-function getGravatarUrl(email: string, size: number=80) {
-    const hex = MD5(email.trim().toLowerCase(), "").toString(CryptoJS.enc.Hex);
+function getGravatarUrl(name: string, size: number=80) {
+    const hex = MD5(name.trim().toLowerCase(), "").toString(CryptoJS.enc.Hex);
     return `http://www.gravatar.com/avatar/${hex}?d=identicon&s=${size}`;
 }
 

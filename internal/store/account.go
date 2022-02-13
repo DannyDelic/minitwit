@@ -1,22 +1,26 @@
 package store
 
 import (
+	"context"
 	"crypto/rand"
+	"github.com/go-pg/pg/v10"
 	"golang.org/x/crypto/bcrypt"
 	"log"
 	"time"
 )
 
 type Account struct {
-	tableName      struct{} `pg:"account,alias:acc"`
-	AccountId      int64
-	Username       string
-	Email          string
-	Password       string `pg:"-"`
-	HashedPassword []byte `json:"-"`
-	Salt           []byte `json:"-"`
-	CreatedAt      time.Time
-	ModifiedAt     time.Time
+	tableName      struct{}  `pg:"account,alias:acc"`
+	AccountID      int64     `json:"account_id"`
+	Username       string    `json:"username"`
+	Email          string    `json:"email"`
+	Password       string    `pg:"-"`
+	HashedPassword []byte    `json:"-"`
+	Salt           []byte    `json:"-"`
+	CreatedAt      time.Time `json:"created_at"`
+	ModifiedAt     time.Time `json:"modified_at"`
+	PostId         int64
+	Posts          []*Post `json:"-" pg:"fk:account_id,rel:has-many,on_delete:CASCADE"`
 }
 
 func AddAccount(account *Account) error {
@@ -42,7 +46,7 @@ func AddAccount(account *Account) error {
 
 func FetchAccount(id int) (*Account, error) {
 	account := new(Account)
-	account.AccountId = int64(id)
+	account.AccountID = int64(id)
 	err := db.Model(account).Returning("*").WherePK().Select()
 	if err != nil {
 		log.Println("Error fetching account")
@@ -70,4 +74,13 @@ func GenerateSalt() ([]byte, error) {
 		return nil, err
 	}
 	return salt, nil
+}
+
+var _ pg.AfterSelectHook = (*Account)(nil)
+
+func (account *Account) AfterSelect(ctx context.Context) error {
+	if account.Posts == nil {
+		account.Posts = []*Post{}
+	}
+	return nil
 }

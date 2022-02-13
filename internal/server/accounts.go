@@ -21,8 +21,11 @@ func signUp(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{
-		"msg": "Signed up successfully.",
-		"jwt": generateJWT(account),
+		"msg":        "Signed up successfully.",
+		"jwt":        generateJWT(account),
+		"email":      account.Email,
+		"account_id": account.AccountID,
+		"username":   account.Username,
 	})
 }
 
@@ -39,7 +42,10 @@ func signIn(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"msg": "Signed in successfully.",
-		"jwt": generateJWT(account),
+		"msg":        "Signed in successfully.",
+		"jwt":        generateJWT(account),
+		"email":      account.Email,
+		"account_id": account.AccountID,
+		"username":   account.Username,
 	})
 }

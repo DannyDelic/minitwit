@@ -79,7 +79,8 @@ const AuthForm = (props: AuthFormProps) => {
                 }
             } else {
                 console.log("this happen4");
-                authContext.login(data.jwt)
+                console.log(data);
+                authContext.login(data.jwt, data['account_id'], data.username, data.email)
                 navigate('/', {replace: true});
             }
         } catch (error) {

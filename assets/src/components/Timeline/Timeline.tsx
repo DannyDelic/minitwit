@@ -1,10 +1,11 @@
-import { useState, useContext } from 'react';
+import {useState, useContext, useEffect} from 'react';
 
 import AuthContext from '../../store/auth-context';
 import Errors from '../Errors/Errors';
 import {Container, Heading, SimpleGrid, Stack} from "@chakra-ui/react";
 import PostSubmitter from "../Posts/PostSubmitter";
-import Post from "../Posts/Post";
+import Post, {IPost} from "../Posts/Post";
+import PostList from "../Posts/PostList";
 
 interface TimelineProps {
     accountId?: number;
@@ -13,25 +14,21 @@ interface TimelineProps {
 const Timeline = (props: TimelineProps) => {
     const [editing, setEditing] = useState(false);
     const [errors, setErrors] = useState({});
-    const posts = [{}]
+    const [posts, setPosts] = useState<IPost[]>([]);
 
     const authContext = useContext(AuthContext);
-    //const isLoggedIn = authContext.loggedIn;
-    const isLoggedIn = true;
+    const isLoggedIn = authContext.loggedIn;
 
     const switchModeHandler = () => {
         setEditing((prevState) => !prevState);
         setErrors({});
     };
 
-    async function deleteHandler() {
+    async function getAllPostsHandler() {
 
-            const response = await fetch('api/posts/' + "someid",
+            const response = await fetch('api/allposts/',
                 {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': 'Bearer ' + authContext.token,
-                    },
+                    method: 'GET',
                 }
             );
             const data = await response.json();
@@ -46,9 +43,13 @@ const Timeline = (props: TimelineProps) => {
                     setErrors(data['error']);
                 }
             } else {
-                //props.onDeletePost(props.post.ID);
+                setPosts(jsonPostsToPosts(data.data));
             }
     }
+
+    useEffect(() => {
+        getAllPostsHandler();
+    }, []);
 
     const editPostHandler = () => {
         setEditing(false);
@@ -59,12 +60,12 @@ const Timeline = (props: TimelineProps) => {
     const cardButtons = editing ?
         <div className="container">
             <button type="button" className="btn btn-link" onClick={switchModeHandler}>{switchModeButtonText}</button>
-            <button type="button" className="btn btn-danger float-right mx-3" onClick={deleteHandler}>Delete</button>
+            <button type="button" className="btn btn-danger float-right mx-3" >Delete</button>
         </div>
         :
         <div className="container">
             <button type="button" className="btn btn-link" onClick={switchModeHandler}>{switchModeButtonText}</button>
-            <button type="button" className="btn btn-danger float-right mx-3" onClick={deleteHandler}>Delete</button>
+            <button type="button" className="btn btn-danger float-right mx-3" >Delete</button>
         </div>
     const errorContent = Object.keys(errors).length === 0 ? null : Errors(errors);
 
@@ -73,13 +74,22 @@ const Timeline = (props: TimelineProps) => {
                 <Stack spacing={4}>
                     <Heading>Timeline placeholder</Heading>
                     {isLoggedIn && (<PostSubmitter/>)}
-                    <Post name={"DingDong"} email={"danny-duller@hotmail.com"} message={"hey der wathopaedsopd"} date={new Date(2020, 9)}/>
-                    <Post name={"DingDong"} email={"danny-duller@hotmail.com"} message={"hey der wathopaedsopd"} date={new Date(2020, 9)}/>
-                    <Post name={"DingDong"} email={"danny-duller@hotmail.com"} message={"hey der wathopaedsopd"} date={new Date(2020, 9)}/>
-                    <Post name={"DingDong"} email={"danny-duller@hotmail.com"} message={"hey der fdsdsfd sdfdsfwathopaedsopd"} date={new Date(2020, 9)}/>
+                    <PostList posts={posts}/>
                 </Stack>
         </Container>
     );
 };
+
+const jsonPostsToPosts = (objects: [{[key: string]: string; }]) : IPost[] => {
+    return objects.map((object: {[key: string]: string; }) => {
+        let newObj: IPost = {content: "", name: "", date: new Date()};
+        newObj.content = object['content'];
+        newObj.name = object['poster'];
+        newObj.date = new Date(Date.parse(object['created_at']));
+
+        return newObj;
+    });
+}
+
 
 export default Timeline;
