@@ -3,6 +3,7 @@ package store
 import (
 	"crypto/rand"
 	"golang.org/x/crypto/bcrypt"
+	"log"
 	"time"
 )
 
@@ -37,6 +38,17 @@ func AddAccount(account *Account) error {
 		return err
 	}
 	return err
+}
+
+func FetchAccount(id int) (*Account, error) {
+	account := new(Account)
+	account.AccountId = int64(id)
+	err := db.Model(account).Returning("*").WherePK().Select()
+	if err != nil {
+		log.Println("Error fetching account")
+		return nil, err
+	}
+	return account, nil
 }
 
 func Authenticate(username, password string) (*Account, error) {

@@ -10,6 +10,7 @@ require (
 )
 
 require (
+	github.com/cristalhq/jwt/v3 v3.1.0 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-pg/zerochecker v0.2.0 // indirect
 	github.com/go-playground/locales v0.13.0 // indirect
