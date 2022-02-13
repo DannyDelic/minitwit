@@ -12,7 +12,8 @@ func init() {
 		_, err := db.Exec(`CREATE TABLE account(
       account_id SERIAL PRIMARY KEY,
       username TEXT NOT NULL UNIQUE,
-      pw_hash TEXT NOT NULL,
+      hashed_password BYTEA NOT NULL,
+      salt BYTEA NOT NULL,
 	  email TEXT not null,
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       modified_at TIMESTAMPTZ NOT NULL DEFAULT NOW()

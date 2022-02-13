@@ -32,7 +32,7 @@ func signIn(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	acccount, err := store.Authenticate(acccount.Username, acccount.PwHash)
+	acccount, err := store.Authenticate(acccount.Username, acccount.Password)
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Sign in failed."})
 		return

@@ -4,26 +4,30 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c6db24eb-5902-423d-885e-2df6260f4051" name="Changes" comment="minitwit-InitialFrontEndBackEnd: Initial frontend and backend done&#10;&#10;- Work is tracked from GitHub projects, now that the initial skeleton is complete - tickets are tracked.">
-      <change afterPath="$PROJECT_DIR$/assets/src/components/Auth/AuthForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/src/pages/AuthPage.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/src/store/auth-context.tsx" afterDir="false" />
+    <list default="true" id="c6db24eb-5902-423d-885e-2df6260f4051" name="Changes" comment="minitwit #6: Routing now works&#10;&#10;- Added proxy in jsonpackage&#10;- NavBar is functional&#10;- Authentication is somewhat functional now">
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/conf/conf.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/src/components/Layout/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/src/components/Layout/Layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/src/components/Layout/NavigationBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/src/components/Layout/NavigationBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/src/components/Posts/Post.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/src/components/Posts/Post.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/src/components/Posts/PostSubmitter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/src/components/Posts/PostSubmitter.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/src/components/Timeline/Timeline.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/src/components/Timeline/Timeline.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/src/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/src/reportWebVitals.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/src/reportWebVitals.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/src/components/Auth/AuthForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/src/components/Auth/AuthForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/minitwit/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/minitwit/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/database/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/database/database.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/server/accounts.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server/accounts.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/server/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server/server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/store/account.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/store/account.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/1_addAccountTable.go" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/1_addAccountTable.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
   </component>
   <component name="GOROOT" url="file://$USER_HOME$/sdk/go1.18beta2" />
   <component name="Git.Settings">
@@ -49,6 +53,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -100,7 +105,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="minitwit-InitialFrontEndBackEnd: Initial frontend and backend done&#10;&#10;- Work is tracked from GitHub projects, now that the initial skeleton is complete - tickets are tracked." />
-    <option name="LAST_COMMIT_MESSAGE" value="minitwit-InitialFrontEndBackEnd: Initial frontend and backend done&#10;&#10;- Work is tracked from GitHub projects, now that the initial skeleton is complete - tickets are tracked." />
+    <MESSAGE value="minitwit #6: Routing now works&#10;&#10;- Added proxy in jsonpackage&#10;- NavBar is functional&#10;- Authentication is somewhat functional now" />
+    <option name="LAST_COMMIT_MESSAGE" value="minitwit #6: Routing now works&#10;&#10;- Added proxy in jsonpackage&#10;- NavBar is functional&#10;- Authentication is somewhat functional now" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

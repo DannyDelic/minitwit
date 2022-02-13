@@ -1,7 +1,10 @@
 package main
 
-import "minitwit/internal/server"
+import (
+	"minitwit/internal/conf"
+	"minitwit/internal/server"
+)
 
 func main() {
-	server.Start()
+	server.Start(conf.NewConfig())
 }
