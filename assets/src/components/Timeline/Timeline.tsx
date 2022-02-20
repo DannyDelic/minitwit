@@ -26,7 +26,7 @@ const Timeline = (props: TimelineProps) => {
 
     async function getAllPostsHandler() {
 
-            const response = await fetch('api/allposts/',
+            const response = await fetch('api/msgs/',
                 {
                     method: 'GET',
                 }
