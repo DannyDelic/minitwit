@@ -6,6 +6,8 @@ import (
 	"minitwit/internal/store"
 )
 
+var IS_SIM = false
+
 func Start(cfg conf.Config) {
 	jwtSetup(cfg)
 

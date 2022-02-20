@@ -3,6 +3,7 @@ package cli
 import (
 	"flag"
 	"fmt"
+	"minitwit/internal/server"
 	"os"
 )
 
@@ -11,7 +12,7 @@ func usage() {
  
 Usage:
  
-rgb [arguments]
+minitwit [arguments]
  
 Supported arguments:
  
@@ -23,6 +24,9 @@ Supported arguments:
 func Parse() {
 	flag.Usage = usage
 	env := flag.String("env", "dev", `Sets runtime environment. Possible values are "dev" and "prod"`)
+	flag.BoolVar(&server.IS_SIM, "s", false, "Turns on sim-mode for DevOps course")
 	flag.Parse()
-	fmt.Println(*env)
+	fmt.Println(env)
+	fmt.Print("Server is handling simulator requests: ")
+	fmt.Println(server.IS_SIM)
 }
