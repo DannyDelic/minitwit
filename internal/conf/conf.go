@@ -14,7 +14,7 @@ const (
 	dbNameKey     = "MINITWIT_DB_NAME"
 	dbUserKey     = "MINITWIT_DB_USER"
 	dbPasswordKey = "MINITWIT_DB_PASSWORD"
-	jwtSecretKey  = "RGB_JWT_SECRET"
+	jwtSecretKey  = "MINITWIT_JWT_SECRET"
 )
 
 type Config struct {
