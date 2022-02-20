@@ -55,8 +55,8 @@ const AuthForm = (props: AuthFormProps) => {
                     method: 'POST',
                     body: JSON.stringify({
                         email: email,
-                        Username: username,
-                        Password: password,
+                        username: username,
+                        pwd: password,
                     }),
                     headers: {
                         'Content-Type': 'application/json',
