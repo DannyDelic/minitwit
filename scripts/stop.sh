@@ -1,3 +1,3 @@
 #! /bin/bash
 
-kill $(pidof rgb)
+kill $(pidof minitwit)
