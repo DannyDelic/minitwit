@@ -14,13 +14,12 @@ type Account struct {
 	AccountID      int64     `json:"account_id"`
 	Username       string    `json:"username"`
 	Email          string    `json:"email"`
-	Password       string    `pg:"-"`
+	Password       string    `pg:"-" json:"pwd"`
 	HashedPassword []byte    `json:"-"`
 	Salt           []byte    `json:"-"`
 	CreatedAt      time.Time `json:"created_at"`
 	ModifiedAt     time.Time `json:"modified_at"`
-	PostId         int64
-	Posts          []*Post `json:"-" pg:"fk:account_id,rel:has-many,on_delete:CASCADE"`
+	Posts          []*Post   `json:"-" pg:"-"`
 }
 
 func AddAccount(account *Account) error {
@@ -53,6 +52,20 @@ func FetchAccount(id int) (*Account, error) {
 		return nil, err
 	}
 	return account, nil
+}
+
+func FetchAccountFromName(name string) (*Account, error) {
+	account := new(Account)
+	_, err := db.QueryOne(account, `select * from account where account.username = ?`, name)
+	if err != nil {
+		log.Println("Error fetching account")
+		return nil, err
+	}
+	return account, nil
+}
+func FetchAccountIdFromName(name string) (int64, error) {
+	account, err := FetchAccountFromName(name)
+	return account.AccountID, err
 }
 
 func Authenticate(username, password string) (*Account, error) {
