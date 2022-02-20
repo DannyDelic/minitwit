@@ -2,9 +2,8 @@ package store
 
 import (
 	"context"
-	"log"
-
 	"github.com/go-pg/pg/v10"
+	"log"
 )
 
 // Database connector
@@ -29,6 +28,6 @@ func (d dbLogger) BeforeQuery(c context.Context, q *pg.QueryEvent) (context.Cont
 
 func (d dbLogger) AfterQuery(c context.Context, q *pg.QueryEvent) error {
 	bytes, _ := q.FormattedQuery()
-	log.Println(string(bytes))
+	log.Println("After query: " + string(bytes))
 	return nil
 }

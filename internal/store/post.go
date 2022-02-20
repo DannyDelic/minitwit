@@ -25,7 +25,7 @@ func AddPost(account *Account, post *Post) error {
 }
 
 func FetchUserPosts(posts *[]Post, id int64) error {
-	_, err := db.Query(posts, `select poster, post.content, post.created_at from post, account where post.account_id = account.account_id and account.account_id = ?`, id, id)
+	_, err := db.Query(posts, `select poster, post.content, post.created_at from post, account where post.account_id = account.account_id and account.account_id = ?`, id)
 	if err != nil {
 		log.Println("Error fetching account's posts")
 	}
@@ -33,7 +33,7 @@ func FetchUserPosts(posts *[]Post, id int64) error {
 }
 
 func FetchAllPosts(posts *[]Post) error {
-	err := db.Model(posts).Order("tbl.created_at DESC").Select()
+	err := db.Model(posts).Order("tbl.created_at DESC").Limit(100).Select()
 	if err != nil {
 		log.Println(err.Error())
 	}

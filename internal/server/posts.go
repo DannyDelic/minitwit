@@ -1,11 +1,9 @@
 package server
 
 import (
+	"github.com/gin-gonic/gin"
 	"minitwit/internal/store"
 	"net/http"
-	"strconv"
-
-	"github.com/gin-gonic/gin"
 )
 
 func createPost(ctx *gin.Context) {
@@ -19,6 +17,8 @@ func createPost(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+	post.Poster = account.Username
+	post.AccountID = account.AccountID
 	if err := store.AddPost(account, post); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -47,18 +47,19 @@ func indexPosts(ctx *gin.Context) {
 }
 
 func accountPosts(ctx *gin.Context) {
-	paramID := ctx.Param("id")
-	id, err := strconv.Atoi(paramID)
+	username := ctx.Param("username")
+	account, err := store.FetchAccountFromName(username)
 	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Not valid ID."})
+		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return
 	}
 
 	var posts []store.Post
-	if err := store.FetchUserPosts(&posts, int64(id)); err != nil {
+	if err := store.FetchUserPosts(&posts, account.AccountID); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+
 	ctx.JSON(http.StatusOK, gin.H{
 		"msg":  "Posts fetched successfully.",
 		"data": posts,
