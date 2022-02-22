@@ -3,7 +3,6 @@ This is the minitwit project for the DevOps course.
 
 # README IS TBD
 
-Run project by
 
 # Initializing PostgreSQL DB
 With a PostgreSQL DB running in the background, initialize your env by sourcing with .env found in root.
